@@ -5,7 +5,7 @@ import unittest
 
 # TODO: Return a dictionary with 4 key-value pairs
 def initialize_dictionary():
-
+    dict = {1:"hello", 2:"bye"}
     return dict()
 
 # TODO: Return a dictionary using the two input parameter lists.
