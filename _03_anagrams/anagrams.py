@@ -44,3 +44,16 @@ word_anagrams = {
     "unreal": ["neural"],
     "wonderful": ["underflow"],
     "zeal": ["laze"]}
+
+class Anagrams(tk.Tk):
+    WIDTH = 500
+    HEIGHT = 200
+    choice = random.sample(word_anagrams.keys(),1)[0]
+    title =tk.Label(text = f"Guess The Anagram Of {choice}")
+    title.place(x=0,y = 0, width = 200, height = 15)
+
+
+
+game = Anagrams()
+game.title = "Anagram Guesser 2000"
+game.mainloop()

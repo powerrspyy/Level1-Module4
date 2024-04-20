@@ -68,21 +68,34 @@ class MemoryMatch(tk.Tk):
             self.numpressed = 1
             if self.lastbutton == button_pressed:
                 self.numpressed = 0
+            elif button_pressed['state'] == tk.DISABLED:
+                self.numpressed = 0
             else:
                 self.lastbutton = button_pressed
         elif self.numpressed == 1:
             self.numpressed = 0
-            if self.buttons[button_pressed] == self.buttons[self.lastbutton]:
-                if self.lastbutton != button_pressed:
-                    button_pressed.configure(state=tk.DISABLED)
-                    self.lastbutton.configure(state=tk.DISABLED)
+            if button_pressed == self.lastbutton:
+                print("true")
+                button_pressed.configure(text = '')
+                self.lastbutton = None
+            elif button_pressed != self.lastbutton and self.buttons[button_pressed] == self.buttons[self.lastbutton]:
+                if button_pressed['state'] != tk.DISABLED:
+                    button_pressed.configure(state = tk.DISABLED)
+                    self.lastbutton.configure(state = tk.DISABLED)
+                else:
+                    self.lastbutton.configure(state = tk.NORMAL)
+                    self.lastbutton.configure(text = '')
+                    self.lastbutton = None
             else:
-                if button_pressed['state'] == tk.NORMAL:
-                    button_pressed.configure(text="")
+                button_pressed.configure(text=f'{self.buttons[button_pressed]}')
+                MemoryMatch.update(self)
+                time.sleep(1)
                 if self.lastbutton['state'] == tk.NORMAL:
                     self.lastbutton.configure(text="")
                 self.lastbutton = None
 
+                if button_pressed['state'] == tk.NORMAL:
+                    button_pressed.configure(text="")
 
 
     def setup_buttons(self, buttons_per_row):
