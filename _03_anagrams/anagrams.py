@@ -48,12 +48,52 @@ word_anagrams = {
 class Anagrams(tk.Tk):
     WIDTH = 500
     HEIGHT = 200
-    choice = random.sample(word_anagrams.keys(),1)[0]
-    title =tk.Label(text = f"Guess The Anagram Of {choice}")
-    title.place(x=0,y = 0, width = 200, height = 15)
+    def __init__(self):
+        super().__init__()
+        self.choice = random.sample(word_anagrams.keys(),1)[0]
+        self.title =tk.Label(text = f"Guess The Anagram Of {self.choice}")
+        self.title.place(x=0,y = 0, width = 200, height = 15)
+
+        self.text_field = tk.Text(background="#d9d9d9", font=('arial', 15))
+        self.text_field.place(x=0,y=17, width = 200, height=24)
+
+        self.button = tk.Button(self, text='Submit', fg='black', font=('arial', 10, 'bold'))
+        self.button.place(x=75,y=43,width=50,height=15)
+        self.button.bind("<ButtonPress>", self.retrieve_input)
+
+        self.label_2 = tk.Label(text = 'Correct', background="green")
+
+        self.next_button = tk.Button(self, text='Next Word', fg='black', font=('arial', 10, 'bold'))
+        self.next_button.place(x=75,y=150,width=50,height=15)
+        self.next_button.bind("<ButtonPress>", self.button_refresh)
+
+
+
+    def retrieve_input(self, button):
+        inputValue=self.text_field.get("1.0","end-1c")
+        if inputValue in word_anagrams[self.choice]:
+            print(True)
+            self.label_2.configure(text = 'Correct', background="green")
+            self.label_2.place(x=50, y=100, height=20,width=100)
+        else:
+            print(False)
+            self.label_2.configure(text = 'Incorrect', background="#f0756c")
+            self.label_2.place(x=50, y=100, height=20,width=100)
+    def button_refresh(self,button):
+        self.choice = random.sample(word_anagrams.keys(),1)[0]
+        self.title =tk.Label(text = f"Guess The Anagram Of {self.choice}")
+        self.title.place(x=0,y = 0, width = 200, height = 15)
+
+        self.text_field = tk.Text(background="#d9d9d9", font=('arial', 15))
+        self.text_field.place(x=0,y=17, width = 200, height=24)
+
+        self.label_2.configure(text = '', background="white")
+        self.label_2.place(x=50, y=100, height=20,width=100)
+
 
 
 
 game = Anagrams()
 game.title = "Anagram Guesser 2000"
+game.geometry("200x200")
 game.mainloop()
